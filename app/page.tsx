@@ -1,6 +1,18 @@
 import Image from "next/image";
+import { request } from '@/graphQL/request'
 
-export default function Home() {
+const Home = async () => {
+  const res = await request(`
+    {
+      ships {
+        id
+        name
+      }
+    }
+  `)
+
+  console.log(res)
+
   return (
     <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12">
       <Image priority height={100} width={1308} src="/beams.jpeg" alt="" className="absolute top-1/2 left-1/2 max-w-none -translate-x-1/2 -translate-y-1/2" />
@@ -54,3 +66,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default Home
