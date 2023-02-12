@@ -1,69 +1,75 @@
 import Image from "next/image";
 import { request } from '@/graphQL/request'
+import { Suspense } from "react";
+
+interface Ship {
+  id: string
+  name: string
+  image: string
+  model: string
+  roles: string[]
+  active: boolean
+  year_built: number
+}
+
 
 const Home = async () => {
-  const res = await request(`
+  const fallbackImage = 'https://images.unsplash.com/photo-1633998860517-29b9ada37476?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2148&q=80'
+  const { ships } = await request(`
     {
       ships {
         id
         name
+        image
+        model
+        roles
+        active
+        year_built
       }
     }
   `)
 
-  console.log(res)
+  if (!ships) {
+    return <div>no ships found</div>
+  }
 
   return (
-    <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12">
-      <Image priority height={100} width={1308} src="/beams.jpeg" alt="" className="absolute top-1/2 left-1/2 max-w-none -translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute inset-0 bg-[url(/img/grid.svg)] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
-      <div className="relative bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
-        <div className="mx-auto max-w-md">
-          <Image height={100} width={200} src="/logo.svg" className="h-6" alt="Tailwind Play" />
-          <div className="divide-y divide-gray-300/50">
-            <div className="space-y-6 py-8 text-base leading-7 text-gray-600">
-              <p>An advanced online playground for Tailwind CSS, including support for things like:</p>
-              <ul className="space-y-4">
-                <li className="flex items-center">
-                  <svg className="h-6 w-6 flex-none fill-sky-100 stroke-sky-500 stroke-2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="11" />
-                    <path d="m8 13 2.165 2.165a1 1 0 0 0 1.521-.126L16 9" fill="none" />
-                  </svg>
-                  <p className="ml-4">
-                    Customizing your
-                    <code className="text-sm font-bold text-gray-900">tailwind.config.js</code> file
-                  </p>
-                </li>
-                <li className="flex items-center">
-                  <svg className="h-6 w-6 flex-none fill-sky-100 stroke-sky-500 stroke-2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="11" />
-                    <path d="m8 13 2.165 2.165a1 1 0 0 0 1.521-.126L16 9" fill="none" />
-                  </svg>
-                  <p className="ml-4">
-                    Extracting classNamees with
-                    <code className="text-sm font-bold text-gray-900">@apply</code>
-                  </p>
-                </li>
-                <li className="flex items-center">
-                  <svg className="h-6 w-6 flex-none fill-sky-100 stroke-sky-500 stroke-2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="11" />
-                    <path d="m8 13 2.165 2.165a1 1 0 0 0 1.521-.126L16 9" fill="none" />
-                  </svg>
-                  <p className="ml-4">Code completion with instant preview</p>
-                </li>
-              </ul>
-              <p>Perfect for learning how the framework works, prototyping a new idea, or creating a demo to share online.</p>
+    <body className="container m-auto">
+      <Suspense fallback="loading ships...">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:xl:grid-cols-4 gap-8 justify-items-stretch">
+          {ships?.map(({ id, name, image, model, roles, active, year_built: built }: Ship) => (
+            <div key={id} className="card w-full bg-gray-700  shadow-xl overflow-hidden">
+              <div className="h40 w-100">
+                <Image
+                  src={image || fallbackImage}
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className="w-full h-40 object-cover" alt={`A ship named ${name}`}
+                  priority
+                />
+              </div>
+
+              <div className="card-body">
+                <h2 className="card-title">
+                  {name}
+                  {active && (<div className="badge badge-secondary">Active</div>)}
+                </h2>
+                <p>Built: {built || 'N/A'}</p>
+                <p>Model: {model || 'N/A'}</p>
+
+                <div className="card-actions justify-end">
+                  {roles?.map((role: string) => (
+                    <div key={role} className="badge badge-outline">{role}</div>
+                  ))}
+                </div>
+              </div>
             </div>
-            <div className="pt-8 text-base font-semibold leading-7">
-              <p className="text-gray-900">Want to dig deeper into Tailwind?</p>
-              <p>
-                <a href="https://tailwindcss.com/docs" className="text-sky-500 hover:text-sky-600">Read the docs &rarr;</a>
-              </p>
-            </div>
-          </div>
+          ))}
+
         </div>
-      </div>
-    </div>
+      </Suspense>
+    </body>
   )
 }
 
