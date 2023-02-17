@@ -1,11 +1,5 @@
 {
-  "extends": [
-    "airbnb",
-    "airbnb/hooks",
-    "prettier",
-    "plugin:@next/next/recommended",
-    "plugin:cypress/recommended"
-  ],
+  "extends": ["airbnb", "airbnb/hooks", "prettier", "plugin:@next/next/recommended"],
   "plugins": ["prettier"],
   "env": {
     "browser": true,
@@ -79,13 +73,7 @@
     "import/no-extraneous-dependencies": [
       "error",
       {
-        "devDependencies": [
-          "storybook/*",
-          "**/*.test.js",
-          "**/*.test.jsx",
-          "**/*.cy.js",
-          "cypress.config.js"
-        ]
+        "devDependencies": ["storybook/*", "**/*.test.js", "**/*.test.jsx", "**/*.cy.js"]
       }
     ]
   }
