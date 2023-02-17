@@ -14,7 +14,7 @@ export default async function Home() {
               that it will serve as a helpful reference for developers who are
               looking to learn more about these tools!
             </p>
-            <Link href="/ships" className="btn btn-primary">
+            <Link href="/vehicles/ships" className="btn btn-primary">
               Get Started
             </Link>
           </article>

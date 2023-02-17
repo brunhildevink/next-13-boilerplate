@@ -37,12 +37,12 @@ export default async function Rockets() {
 
   return (
     <Suspense fallback="loading ships...">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:xl:grid-cols-4 gap-8 justify-items-stretch">
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:xl:grid-cols-4 gap-8 justify-items-stretch">
         {rockets?.map(
           ({ id, name, active, type, company, description }: Rocket) => (
             <div
               key={id}
-              className="card w-full bg-base-200  shadow-xl overflow-hidden"
+              className="card w-full bg-neutral  shadow-xl overflow-hidden"
             >
               <div className="card-body">
                 <h2 className="card-title">
