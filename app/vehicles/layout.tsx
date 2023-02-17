@@ -1,16 +1,16 @@
-"use client";
-import Link from "next/link";
-import { useState } from "react";
-import { usePathname } from "next/navigation";
+'use client';
+import Link from 'next/link';
+import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import IconPlus from '@/icons/plus-small.svg';
+import IconMinus from '@/icons/minus-small.svg';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [count, setCount] = useState(0);
   const pathname = usePathname();
 
   const returnClassNameActiveRoute = (route: string) => {
-    return `${
-      pathname?.includes(route) ? "btn-active" : ""
-    } btn btn-secondary btn-sm`;
+    return `${pathname?.includes(route) ? 'btn-active' : ''} btn btn-secondary btn-sm`;
   };
 
   return (
@@ -18,18 +18,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <nav className="flex flex-wrap gap-4 flex-row justify-between navbar navbar-expand-md navbar-light bg-light">
         <ul className="flex flex-row gap-4">
           <li>
-            <Link
-              className={returnClassNameActiveRoute("rockets")}
-              href="/vehicles/rockets"
-            >
+            <Link className={returnClassNameActiveRoute('rockets')} href="/vehicles/rockets">
               Rockets
             </Link>
           </li>
           <li>
-            <Link
-              className={returnClassNameActiveRoute("ships")}
-              href="/vehicles/ships"
-            >
+            <Link className={returnClassNameActiveRoute('ships')} href="/vehicles/ships">
               Ships
             </Link>
           </li>
@@ -41,16 +35,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             className="btn btn-square btn-sm"
             onClick={() => setCount((count) => count - 1)}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M18 12H6" />
-            </svg>
+            <IconMinus height={24} width={24} />
           </button>
           <p>{count}</p>
           <button
@@ -58,20 +43,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             className="btn btn-square btn-sm"
             onClick={() => setCount((count) => count + 1)}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 6v12m6-6H6"
-              />
-            </svg>
+            <IconPlus height={24} width={24} />
           </button>
         </div>
       </nav>

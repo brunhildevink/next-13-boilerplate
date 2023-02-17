@@ -1,6 +1,92 @@
 {
-  "extends": "next/core-web-vitals",
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "prettier",
+    "plugin:@next/next/recommended",
+    "plugin:cypress/recommended"
+  ],
+  "plugins": ["prettier"],
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["@", "./src"],
+          ["@public", "./public"]
+        ],
+        "extensions": [".js", ".svg", ".jsx"]
+      }
+    }
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
   "rules": {
-    "indent": ["error", 2]
+    "padding-line-between-statements": [
+      "warn",
+      { "blankLine": "always", "prev": "*", "next": "return" },
+      { "blankLine": "always", "prev": ["const", "let"], "next": "*" },
+      { "blankLine": "any", "prev": ["const", "let"], "next": ["const", "let"] },
+      { "blankLine": "always", "prev": ["case", "default"], "next": "*" },
+      { "blankLine": "any", "prev": ["case", "default"], "next": ["case", "default"] }
+    ],
+    "@next/next/no-img-element": "off",
+    "camelcase": "off",
+    "consistent-return": "off",
+    "import/no-anonymous-default-export": "off",
+    "import/prefer-default-export": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "no-alert": "off",
+    "no-console": ["error", { "allow": ["warn", "error", "info"] }],
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["@mui/*/*/*", "!@mui/material/test-utils/*"]
+      }
+    ],
+    "no-script-url": "off",
+    "no-shadow": "off",
+    "no-unused-expressions": "off",
+    "no-unused-vars": "warn",
+    "no-useless-return": "off",
+    "prettier/prettier": ["error", { "singleQuote": true, "endOfLine": "auto" }],
+    "react-hooks/exhaustive-deps": "error",
+    "react/button-has-type": "off",
+    "react/function-component-definition": "off",
+    "react/jsx-no-useless-fragment": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-uses-react": "off",
+    "react/no-array-index-key": "off",
+    "react/no-unstable-nested-components": ["off", { "allowAsProps": true }],
+    "react/prop-types": 0,
+    "react/props-spreading": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/destructuring-assignment": "off",
+    // The react/no-danger eslint prop only works on DOM nodes. Not on MUI nodes.
+    // Therefore the special no-restricted-syntax rule will search for any component using the dangerouslySetInnerHTML prop.
+    "react/no-danger": "error",
+    "no-restricted-syntax": [
+      "error",
+      {
+        "selector": "JSXAttribute[name.name='dangerouslySetInnerHTML']",
+        "message": "dangerouslySetInnerHTML prop is not allowed."
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "storybook/*",
+          "**/*.test.js",
+          "**/*.test.jsx",
+          "**/*.cy.js",
+          "cypress.config.js"
+        ]
+      }
+    ]
   }
 }
