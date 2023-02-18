@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "build dev": "next build && next export && serve out"
   },
   "dependencies": {
     "@next/font": "13.1.6",
@@ -16,6 +17,7 @@
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.10",
     "daisyui": "^2.50.0",
+    "encoding": "^0.1.13",
     "eslint": "^8.34.0",
     "eslint-config-next": "^13.1.6",
     "graphql": "^16.6.0",
