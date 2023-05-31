@@ -2,14 +2,12 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import IconPlus from '@/icons/plus-small.svg';
-import IconMinus from '@/icons/minus-small.svg';
+import { Route } from '@/types/routing';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  const [count, setCount] = useState(0);
+export default function Layout({ children, modal }: { children: React.ReactNode; modal: any }) {
   const pathname = usePathname();
 
-  const returnClassNameActiveRoute = (route: string) => {
+  const returnClassNameActiveRoute = (route: Route) => {
     return `${pathname?.includes(route) ? 'btn-active' : ''} btn btn-secondary btn-sm`;
   };
 
@@ -18,36 +16,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <nav className="flex flex-wrap gap-4 flex-row justify-between navbar navbar-expand-md navbar-light bg-light">
         <ul className="flex flex-row gap-4">
           <li>
-            <Link className={returnClassNameActiveRoute('rockets')} href="/vehicles/rockets">
+            <Link className={returnClassNameActiveRoute(Route.Rockets)} href={Route.Rockets}>
               Rockets
             </Link>
           </li>
           <li>
-            <Link className={returnClassNameActiveRoute('ships')} href="/vehicles/ships">
+            <Link className={returnClassNameActiveRoute(Route.Ships)} href={Route.Ships}>
               Ships
             </Link>
           </li>
         </ul>
-
-        <div className="flex flex-row gap-4">
-          <button
-            title="decrement counter"
-            className="btn btn-square btn-sm"
-            onClick={() => setCount((count) => count - 1)}
-          >
-            <IconMinus height={24} width={24} />
-          </button>
-          <p>{count}</p>
-          <button
-            title="increment counter"
-            className="btn btn-square btn-sm"
-            onClick={() => setCount((count) => count + 1)}
-          >
-            <IconPlus height={24} width={24} />
-          </button>
-        </div>
       </nav>
       {children}
+      {modal}
     </div>
   );
 }

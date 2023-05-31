@@ -1,3 +1,4 @@
+import { Route } from '@/types/routing';
 import Link from 'next/link';
 
 export default async function Home() {
@@ -13,7 +14,7 @@ export default async function Home() {
               and <code className="mockup-code">React&nbsp;18</code>. I hope that it will serve as a
               helpful reference for developers who are looking to learn more about these tools!
             </p>
-            <Link href="/vehicles/ships" className="btn btn-primary">
+            <Link href={Route.Rockets} className="btn btn-primary">
               Get Started
             </Link>
           </article>
